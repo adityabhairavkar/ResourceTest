@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ThirdParty.Json.LitJson;
 
 namespace EC2ResourceDetection
 {
     public static class EC2
     {
+
+        public static string ARN, region, accountId, instanceid,platform;
         public static string getHostName()
         {
             return Amazon.Util.EC2InstanceMetadata.Hostname;
@@ -14,7 +17,10 @@ namespace EC2ResourceDetection
         public static string getInstanceId()
         {
 
-            return Amazon.Util.EC2InstanceMetadata.InstanceId;
+            instanceid= Amazon.Util.EC2InstanceMetadata.InstanceId;
+            if (instanceid != null)
+                return instanceid;
+            return null;
         }
         //return host InstanceType for ec2 instance
         public static string getInstanceType()
@@ -25,7 +31,8 @@ namespace EC2ResourceDetection
 
         internal static object getCloudProvider()
         {
-            return "AWS";
+            platform = "aws:ec2";
+            return platform;
         }
 
         //return host LocalHost Name for ec2 instance
@@ -47,6 +54,29 @@ namespace EC2ResourceDetection
             return Amazon.Util.EC2InstanceMetadata.AvailabilityZone;
         }
 
+        public static string getRegion()
+        {
+
+            var identityDocument = Amazon.Util.EC2InstanceMetadata.IdentityDocument;
+            if (!string.IsNullOrEmpty(identityDocument))
+            {
+                try
+                {
+                    var jsonDocument = JsonMapper.ToObject(identityDocument.ToString());
+                    region = jsonDocument["region"].ToString();
+                    if (region != null)
+                        return region;
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine(e + "Error attempting to read region from instance metadata identity document");
+                }
+            }
+
+            return null;
+        }
+    
         public static string getHostImageId()
         {
 
@@ -55,10 +85,24 @@ namespace EC2ResourceDetection
 
         public static string getAccountId()
         {
-            string id = Amazon.Util.EC2InstanceMetadata.IdentityDocument;
-            string[] data = id.Split(",");
-            data = data[0].Split(":");
-            return data[1];
+            var identityDocument = Amazon.Util.EC2InstanceMetadata.IdentityDocument;
+            if (!string.IsNullOrEmpty(identityDocument))
+            {
+                try
+                {
+                    var jsonDocument = JsonMapper.ToObject(identityDocument.ToString());
+                    accountId = jsonDocument["accountId"].ToString();
+                    if (accountId != null)
+                        return accountId;
+                }
+
+                catch (Exception e)
+                {
+                    Console.WriteLine(e + "Error attempting to read region from instance metadata identity document");
+                }
+            }
+
+            return null;
         }
         public static async Task<bool> isEC2Instance()
         {
@@ -78,6 +122,12 @@ namespace EC2ResourceDetection
 
 
         }
+        public static string getARN()
+        {
+            if(platform!=null && region != null && accountId!=null && instanceid!=null)
+            return "arn:" + platform + ":" + region + ":" + accountId + ":instance/" + instanceid;
+            return null;
+        } 
         public static async Task<HttpResponseMessage> pingEC2()
         {
             using (var client = new HttpClient())

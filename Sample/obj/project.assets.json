@@ -939,11 +939,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/adityabhairavkar/Projects/Sample/Sample/Sample.csproj",
+      "projectUniqueName": "/Users/adityabhairavkar/Projects/Sample/ResourceTest/Sample/Sample.csproj",
       "projectName": "Sample",
-      "projectPath": "/Users/adityabhairavkar/Projects/Sample/Sample/Sample.csproj",
+      "projectPath": "/Users/adityabhairavkar/Projects/Sample/ResourceTest/Sample/Sample.csproj",
       "packagesPath": "/Users/adityabhairavkar/.nuget/packages/",
-      "outputPath": "/Users/adityabhairavkar/Projects/Sample/Sample/obj/",
+      "outputPath": "/Users/adityabhairavkar/Projects/Sample/ResourceTest/Sample/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/adityabhairavkar/.config/NuGet/NuGet.Config"

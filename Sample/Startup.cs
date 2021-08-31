@@ -58,7 +58,7 @@ namespace Sample
         public static IEnumerable<KeyValuePair<string, object>> buildResourceAsync()
         {
             var attributeList = new List<KeyValuePair<string, object>>();
-
+                
                 attributeList.Add(new KeyValuePair<string, object>("cloud.region", EC2ResourceDetection.EC2.getAvailabilityZone()));
                 Console.WriteLine("cloud.region :" + EC2ResourceDetection.EC2.getAvailabilityZone());
                 attributeList.Add(new KeyValuePair<string, object>("cloud.provide", EC2ResourceDetection.EC2.getCloudProvider()));
@@ -77,7 +77,11 @@ namespace Sample
                 Console.WriteLine("host.image.id" + EC2ResourceDetection.EC2.getHostImageId());
                 attributeList.Add(new KeyValuePair<string, object>("account.id", EC2ResourceDetection.EC2.getAccountId()));
                 Console.WriteLine("account.id" + EC2ResourceDetection.EC2.getAccountId());
-            
+                attributeList.Add(new KeyValuePair<string, object>("cloud.region" ,EC2ResourceDetection.EC2.getRegion()));
+                Console.WriteLine("cloud.region" + EC2ResourceDetection.EC2.getRegion());
+                attributeList.Add(new KeyValuePair<string, object>("host.id", EC2ResourceDetection.EC2.getARN()));
+                Console.WriteLine("host.id"+ EC2ResourceDetection.EC2.getARN());
+
             return attributeList;
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,24 +98,23 @@ namespace Sample
             {
                 endpoints.MapGet("/java", async context =>
                 {
-                    //await context.Response.WriteAsync("This is response from ASP NET CORE API! <br>" +
-                    //"  host.name :" + EC2ResourceDetection.EC2.getHostName()+
-                    //"  cloud.provide :"+ EC2ResourceDetection.EC2.getCloudProvider()+
-                    //"  host.id :" + EC2ResourceDetection.EC2.getInstanceId()+
-                    //"  host.type :"+ EC2ResourceDetection.EC2.getInstanceType()+
-                    //"  mac.address :"+ EC2ResourceDetection.EC2.getMacAddress()+
-                    //"  host.image.id :"+ EC2ResourceDetection.EC2.getHostImageId()
-
-
-                    //);
+                    await context.Response.WriteAsync("This is response from ASP NET CORE API! <br>" +
+                    "  host.name :" + EC2ResourceDetection.EC2.getHostName()+
+                    "  cloud.provide :"+ EC2ResourceDetection.EC2.getCloudProvider()+
+                    "  host.id :" + EC2ResourceDetection.EC2.getInstanceId()+
+                    "  host.type :"+ EC2ResourceDetection.EC2.getInstanceType()+
+                    "  mac.address :"+ EC2ResourceDetection.EC2.getMacAddress()+
+                    "  host.image.id :"+ EC2ResourceDetection.EC2.getHostImageId()+
+                    "  cloud.region :" + EC2ResourceDetection.EC2.getRegion()+
+                    "account.id :"+ EC2ResourceDetection.EC2.getAccountId());
                        //"  mac.address :"+ EC2ResourceDetection.EC2.getMacAddress()+
                     //"  host.image.id :"+ EC2ResourceDetection.EC2.getHostImageId()
-                    using (var client = new HttpClient())
-                    {
-                        var request = new HttpRequestMessage(HttpMethod.Get, "http://10.55.14.142:8080/hello");
-                        var response = await client.SendAsync(request);
-                        await context.Response.WriteAsync(response.ToString());
-                    }
+                    //using (var client = new HttpClient())
+                    //{
+                     //   var request = new HttpRequestMessage(HttpMethod.Get, "http://10.55.14.142:8080/hello");
+                      //  var response = await client.SendAsync(request);
+                        //await context.Response.WriteAsync(response.ToString());
+                    //}
 
 
                 });

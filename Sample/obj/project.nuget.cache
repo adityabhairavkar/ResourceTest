@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9eQZIdRUG2Rpq+aVqxg6cFnSJIxr+Vn2IN4Z9GaPmpGzrbex2l94q2YkeZcz3iRC8+dBDCpph+EpR342R9a1gA==",
+  "dgSpecHash": "dwldZmGJMDTlt4MukAVAqSCH7YIHp8VsBvT3a/1L6bdjvI4Zk4Tcf1ELv518NtriqVigLoYDqPUupJnEwm4jZQ==",
   "success": true,
-  "projectFilePath": "/Users/adityabhairavkar/Projects/Sample/Sample/Sample.csproj",
+  "projectFilePath": "/Users/adityabhairavkar/Projects/Sample/ResourceTest/Sample/Sample.csproj",
   "expectedPackageFiles": [
     "/Users/adityabhairavkar/.nuget/packages/awssdk.core/3.7.1.1/awssdk.core.3.7.1.1.nupkg.sha512",
     "/Users/adityabhairavkar/.nuget/packages/google.protobuf/3.15.5/google.protobuf.3.15.5.nupkg.sha512",
